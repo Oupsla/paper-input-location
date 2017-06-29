@@ -180,11 +180,13 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
         _onChangePlace: function() {
             this.$.inputPaper.invalid = false;
             this.place = this.autocomplete.getPlace();
-            this.locationName = this.autocomplete.getPlace().formatted_address;
-            this.latitude = this.autocomplete.getPlace().geometry.location.lat();
-            this.longitude = this.autocomplete.getPlace().geometry.location.lng();
+            if(!this.place.geometry) {
+              return;
+            }
+            this.locationName = this.place.formatted_address;
+            this.latitude = this.place.geometry.location.lat();
+            this.longitude = this.place.geometry.location.lng();
             this.fire('place-clicked');
-
         }
     });
 </script>
