@@ -169,9 +169,9 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
             var rawInput;
 
             if (this.$.inputPaper.querySelector('#input')) {
-                rawInput = this.$.inputPaper.querySelector('#input');
+                rawInput = this.$.inputPaper.querySelector('#nativeInput');
             } else {
-                rawInput = this.$.inputPaper.root.querySelector('#input');
+                rawInput = this.$.inputPaper.root.querySelector('#nativeInput');
             }
 
             this.autocomplete = new google.maps.places.Autocomplete(rawInput, this.options);
