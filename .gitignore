@@ -1,2 +1,5 @@
-bower_components/
 node_modules/
+bower_components
+build
+.idea
+/bower_components-1.x/
