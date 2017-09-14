@@ -21,9 +21,15 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
 <dom-module id="paper-input-location">
     <template>
     <style>
-         :host {
-            display: block;
+        :host {
+          display: block;
+          @apply --paper-input-location-container;
         }
+
+        #inputPaper {
+          @apply --paper-input-location-input;
+        }
+
     </style>
 
     <google-maps-api id="maps" api-key="[[mapsApiKey]]" libraries="places" on-api-load="_onApiLoad"></google-maps-api>
