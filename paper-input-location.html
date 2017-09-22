@@ -35,6 +35,7 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
     <google-maps-api id="maps" api-key="[[mapsApiKey]]" libraries="places" on-api-load="_onApiLoad"></google-maps-api>
     <paper-input
             id="inputPaper"
+            always-float-label="[[alwaysFloatLabel]]"
             on-value-changed="_resetLocation"
             invalid="{{invalid}}"
             disabled$="[[disabled]]"
@@ -116,6 +117,13 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
              * Set to true to disable this input.
              */
             disabled: {
+                type: Boolean,
+                default: false
+            },
+            /**
+             * Set to true to float the label
+             */
+            alwaysFloatLabel: {
                 type: Boolean,
                 default: false
             },
