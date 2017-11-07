@@ -1,7 +1,7 @@
 {
   "name": "paper-input-location",
-  "version": "2.0.3",
-  "description": "A Material Design input with location autocomplete (Polymer 1.x)",
+  "version": "2.0.4",
+  "description": "A Material Design input with location autocomplete",
   "authors": [
     "Zaccharie Jacquat"
   ],
@@ -12,8 +12,7 @@
   "main": "paper-input-location.html",
   "dependencies": {
     "polymer": "Polymer/polymer#1.9 - 2",
-    "paper-input": "PolymerElements/paper-input#1 - 2",
-    "google-apis": "GoogleWebComponents/google-apis#1 - 2"
+    "google-apis": "GoogleWebComponents/google-apis#^2.0.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
@@ -25,7 +24,6 @@
     "1.x": {
       "dependencies": {
         "polymer": "Polymer/polymer#^1.4.0",
-        "paper-input": "PolymerElements/paper-input#^1.1.11",
         "google-apis": "GoogleWebComponents/google-apis#^1.1.7"
       },
       "devDependencies": {

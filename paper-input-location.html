@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../google-apis/google-maps-api.html">
 
 <!--
@@ -20,32 +19,31 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
 
 <dom-module id="paper-input-location">
     <template>
-    <style>
-        :host {
-          display: block;
-          @apply --paper-input-location-container;
-        }
+        <style>
+            :host {
+                display: block;
+                @apply --paper-input-location-container;
+            }
 
-        #inputPaper {
-          @apply --paper-input-location-input;
-        }
+            input {
+                font-size: 18px;
+                padding: 10px 10px 10px 5px;
+                display: block;
+                border: none;
+            }
 
-    </style>
+            .input-border {
+                border-bottom: 1px solid #757575;
+            }
 
-    <google-maps-api id="maps" api-key="[[mapsApiKey]]" libraries="places" on-api-load="_onApiLoad"></google-maps-api>
-    <paper-input
-            id="inputPaper"
-            always-float-label="[[alwaysFloatLabel]]"
-            on-value-changed="_resetLocation"
-            invalid="{{invalid}}"
-            disabled$="[[disabled]]"
-            autofocus="[[autofocus]]"
-            label="[[label]]"
-            value="{{query}}"
-            required$="[[required]]"
-            error-message="[[errorMessage]]">
-    </paper-input>
-  </template>
+            input:focus {
+                outline: none;
+            }
+        </style>
+
+        <google-maps-api id="maps" api-key="[[mapsApiKey]]" libraries="places" on-api-load="_onApiLoad"></google-maps-api>
+        <input id="pacInput" type="text" required$="[[required]]" value="{{query}}" autofocus="[[autofocus]]" disabled$="[[disabled]]">
+    </template>
 </dom-module>
 <script>
     Polymer({
@@ -71,7 +69,7 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
              */
             autocompleteOptions: {
                 type: Object,
-                value: function() {
+                value: function () {
                     return {};
                 }
             },
@@ -80,7 +78,7 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
              */
             place: {
                 type: Object,
-                value: function() {
+                value: function () {
                     return {};
                 },
                 notify: true
@@ -121,13 +119,6 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
                 default: false
             },
             /**
-             * Set to true to float the label
-             */
-            alwaysFloatLabel: {
-                type: Boolean,
-                default: false
-            },
-            /**
              * Set to true to mark the input as required.
              */
             required: {
@@ -147,55 +138,52 @@ This element work with the Google Maps API. You need a valid API Key. You can ge
              */
             mapsApiKey: String,
             /**
-             * The label for this input.
-             */
-            label: String,
-            /**
              * Autofocus propertie
              */
             autofocus: Boolean,
             /**
-             * The error message to display when the input is invalid.
-             */
-            errorMessage: String,
+            *   Border below input
+            */
+            showBorder: {
+                type: Boolean,
+                value: false
+            }
+        },
+        ready: function () {
+            if (this.showBorder) {
+                this.$.pacInput.classList.add('input-border');
+            }
         },
         /**
          * Validate if the input is filled with a valid Google Map address.
          */
-        validatePlace: function() {
+        validatePlace: function () {
             if (this.place.geometry) {
                 return true;
             } else {
-                this.$.inputPaper.invalid = true;
+                this.$.pacInput.invalid = true;
                 return false;
             }
         },
-        _computeLocation: function(longitude, latitude) {
+        _computeLocation: function (longitude, latitude) {
             return {
                 'lng': longitude,
                 'lat': latitude
             }
         },
-        _resetLocation: function() {
+        _resetLocation: function () {
             this.place = {};
         },
-        _onApiLoad: function() {
+        _onApiLoad: function () {
             var rawInput;
-
-            if (this.$.inputPaper.querySelector('#input')) {
-                rawInput = this.$.inputPaper.querySelector('#nativeInput');
-            } else {
-                rawInput = this.$.inputPaper.root.querySelector('#nativeInput');
-            }
-
-            this.autocomplete = new google.maps.places.Autocomplete(rawInput, this.options);
+            this.autocomplete = new google.maps.places.Autocomplete(this.$.pacInput, this.options);
             google.maps.event.addListener(this.autocomplete, 'place_changed', this._onChangePlace.bind(this));
         },
-        _onChangePlace: function() {
-            this.$.inputPaper.invalid = false;
+        _onChangePlace: function () {
+            this.$.pacInput.invalid = false;
             this.place = this.autocomplete.getPlace();
-            if(!this.place.geometry) {
-              return;
+            if (!this.place.geometry) {
+                return;
             }
             this.locationName = this.place.formatted_address;
             this.latitude = this.place.geometry.location.lat();
